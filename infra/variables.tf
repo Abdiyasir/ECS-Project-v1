@@ -49,12 +49,10 @@ variable "igw_cidr" {
 variable "ngw-1_cidr" {
   type        = string
   description = "First Nat gateway CIDR block"
-
 }
 
 variable "ngw-2_cidr" {
   type        = string
-  description = "Second Nat gateway CIDR block"
-
+  description = "First Nat gateway CIDR block"
 }
 

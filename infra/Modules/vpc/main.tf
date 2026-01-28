@@ -42,11 +42,11 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.threat-composer.id
 
   tags = {
-    Name = "igw"
+    Name =  "igw"
   }
 }
 
-resource "aws_route_table" "igw" {
+resource "aws_route_table" "public-1-igw" {
   vpc_id = aws_vpc.threat-composer.id
 
   route {
@@ -55,9 +55,34 @@ resource "aws_route_table" "igw" {
   }
 
   tags = {
-    Name = "IGW route table"
+    Name = "Public 1 IGW route table"
   }
 }
+
+resource "aws_route_table" "public-2-igw" {
+  vpc_id = aws_vpc.threat-composer.id
+
+  route {
+    cidr_block = var.igw_cidr
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "Public 1 IGW route table"
+  }
+}
+
+
+resource "aws_route_table_association" "public-1-igw" {
+  subnet_id      = aws_subnet.public-1.id
+  route_table_id = aws_route_table.public-1-igw.id
+}
+
+resource "aws_route_table_association" "public-2-igw" {
+  subnet_id      = aws_subnet.public-2.id
+  route_table_id = aws_route_table.public-2-igw.id
+}
+
 
 resource "aws_eip" "ngw-1" {
   domain = "vpc"
@@ -86,7 +111,7 @@ resource "aws_nat_gateway" "ngw-1" {
   depends_on = [aws_internet_gateway.igw]
 }
 
-resource "aws_route_table" "public-1-ngw" {
+resource "aws_route_table" "private-1-ngw" {
   vpc_id = aws_vpc.threat-composer.id
 
   route {
@@ -95,13 +120,13 @@ resource "aws_route_table" "public-1-ngw" {
   }
 
   tags = {
-    Name = "public subnet 1 nat-route-table"
+    Name = "Private subnet 1 ngw -route-table"
   }
 }
 
-resource "aws_route_table_association" "public-1-ngw" {
+resource "aws_route_table_association" "private-1-ngw" {
   subnet_id      = aws_subnet.public-1.id
-  route_table_id = aws_route_table.public-1-ngw.id
+  route_table_id = aws_route_table.private-1-ngw.id
 }
 
 resource "aws_nat_gateway" "ngw-2" {
@@ -114,7 +139,7 @@ resource "aws_nat_gateway" "ngw-2" {
   
   depends_on = [aws_internet_gateway.igw]
 }
-resource "aws_route_table" "public-2-ngw" {
+resource "aws_route_table" "private-2-ngw" {
   vpc_id = aws_vpc.threat-composer.id
 
   route {
@@ -123,11 +148,11 @@ resource "aws_route_table" "public-2-ngw" {
   }
 
   tags = {
-    Name = "public subnet 2 nat-route-table"
+    Name = "Private subnet 2 ngw-route-table"
   }
 }
 
-resource "aws_route_table_association" "public-2-ngw" {
+resource "aws_route_table_association" "private-2-ngw" {
   subnet_id      = aws_subnet.public-2.id
-  route_table_id = aws_route_table.public-2-ngw.id
+  route_table_id = aws_route_table.private-2-ngw.id
 }
