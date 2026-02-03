@@ -13,37 +13,37 @@ output "EIP-2_allocation" {
   value       = aws_eip.ngw-2.id
 }
 
-output "public-1 subnet" {
+output "public-1_subnet" {
   description = "The Public subnet 1 ID"
   value       = aws_subnet.public-1.id
 }
 
-output "public-2 subnet" {
+output "public-2_subnet" {
   description = "The Public subnet 2 ID"
   value       = aws_subnet.public-2.id
 }
 
-output "private-1 subnet" {
+output "private-1_subnet" {
   description = "The private subnet 1 ID"
   value       = aws_subnet.private-1.id
 }
 
-output "private-2 subnet" {
+output "private-2_subnet" {
   description = "The private subnet 2 ID"
   value       = aws_subnet.private-2.id
 }
 
-output "Internet gateway" {
+output "Internet_gateway" {
   description = "The internet gateway ID"
   value       = aws_internet_gateway.igw.id
 }
 
-output "Nat gateway 1" {
+output "Nat_gateway_1" {
   description = "The first Nat gateway ID"
   value       = aws_nat_gateway.ngw-1.id
 }
 
-output "Nat gateway 2" {
+output "Nat_gateway_2" {
   description = "The second Nat gateway ID"
   value       = aws_nat_gateway.ngw-2.id
 }

@@ -11,3 +11,11 @@ module "vpc" {
   ngw-1_cidr = var.ngw-1_cidr
   ngw-2_cidr = var.ngw-2_cidr
   }
+
+module "alb" {
+  source = "./Modules/alb"
+  vpc_id = module.vpc.vpc_id
+  vpc_cidr = var.vpc_cidr
+  public-1_subnet = var.public-1_subnet
+  public-2_subnet = var.public-2_subnet
+  }
