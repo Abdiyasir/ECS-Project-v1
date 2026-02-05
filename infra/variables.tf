@@ -56,3 +56,12 @@ variable "ngw-2_cidr" {
   description = "First Nat gateway CIDR block"
 }
 
+variable "domain_name" {
+  type        = string
+  description = "Domain name"
+}
+
+variable "certificate_arn" {
+  type        = string
+  description = "ARN for ACM certificate"
+}

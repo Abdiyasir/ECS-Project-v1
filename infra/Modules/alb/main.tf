@@ -63,6 +63,7 @@ resource "aws_lb_listener" "listener" {
   load_balancer_arn         = aws_lb.alb_threat_composer.arn
   port                      = "80"
   protocol                  = "HTTP"
+  certificate_arn = var.certificate_arn
 
   default_action {
     type                    = "forward"

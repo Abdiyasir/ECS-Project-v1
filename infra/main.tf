@@ -18,4 +18,10 @@ module "alb" {
   vpc_cidr = var.vpc_cidr
   public-1_subnet = var.public-1_subnet
   public-2_subnet = var.public-2_subnet
+  certificate_arn = module.acm.certificate_arn
+  }
+
+  module "acm" {
+  source = "./Modules/acm"
+  domain_name = var.domain_name
   }
