@@ -10,7 +10,7 @@ output "alb_arn" {
 
 output "listener_arn" {
   description = "The ARN of the ALB listener"
-  value = aws_lb_listener.listener.arn
+  value       = aws_lb_listener.listener.arn
 }
 
 output "lb_sg_id" {
@@ -21,7 +21,7 @@ output "lb_sg_id" {
 
 output "target_group_arn" {
   description = "The ARN of the target group"
-  value = aws_lb_target_group.alb_tg.arn
+  value       = aws_lb_target_group.alb_tg.arn
 }
 
 output "alb_zone_id" {

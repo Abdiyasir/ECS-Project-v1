@@ -1,4 +1,4 @@
-  output "vpc_id" {
+output "vpc_id" {
   description = "The ID of the newly created VPC"
   value       = module.vpc.vpc_id
 }
@@ -20,7 +20,7 @@ output "alb_arn" {
 
 output "listener_arn" {
   description = "The ARN of the ALB listener"
-  value = module.alb.listener_arn
+  value       = module.alb.listener_arn
 }
 
 output "lb_sg_id" {
@@ -30,7 +30,7 @@ output "lb_sg_id" {
 
 output "target_group_arn" {
   description = "The ARN of the target group"
-  value = module.alb.target_group_arn
+  value       = module.alb.target_group_arn
 }
 
 output "alb_zone_id" {
@@ -42,3 +42,4 @@ output "lb_dns_name" {
   description = "The DNS name of the load balancer"
   value       = module.alb.lb_dns_name
 }
+

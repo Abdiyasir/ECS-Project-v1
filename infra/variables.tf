@@ -65,3 +65,45 @@ variable "certificate_arn" {
   type        = string
   description = "ARN for ACM certificate"
 }
+
+variable "repo_name" {
+  type        = string
+  description = "Name of ECR repo"
+
+}
+
+variable "image_tag_mutability" {
+  type        = string
+  description = "Image mutability"
+
+}
+
+variable "ecs_family" {
+  type        = string
+  description = "ECS family name "
+
+}
+
+
+variable "image_uri" {
+  type        = string
+  description = "Docker image URI"
+
+}
+
+variable "container_name" {
+  type        = string
+  description = "Name of ECS container"
+
+}
+variable "task_count" {
+  type        = string
+  description = "Numer of ECS tasks"
+
+}
+
+variable "container_port" {
+  type        = string
+  description = "Numer of ECS tasks"
+
+}
