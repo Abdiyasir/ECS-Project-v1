@@ -52,7 +52,13 @@ variable "task_count" {
 }
 
 variable "container_port" {
+  type        = number
+  description = "ECS container port"
+
+}
+
+variable "lb_sg_id" {
   type        = string
-  description = "Numer of ECS tasks"
+  description = "ALB security group"
 
 }

@@ -1,4 +1,9 @@
+variable "cert_name" {
+  type        = string
+  description = "A record for ACM"
+}
+
 variable "domain_name" {
   type        = string
-  description = "Domain name"
+  description = "Route 53 Domain name"
 }

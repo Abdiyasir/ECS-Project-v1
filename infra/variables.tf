@@ -56,14 +56,9 @@ variable "ngw-2_cidr" {
   description = "First Nat gateway CIDR block"
 }
 
-variable "domain_name" {
+variable "cert_name" {
   type        = string
-  description = "Domain name"
-}
-
-variable "certificate_arn" {
-  type        = string
-  description = "ARN for ACM certificate"
+  description = "A record for ACM"
 }
 
 variable "repo_name" {
@@ -103,7 +98,12 @@ variable "task_count" {
 }
 
 variable "container_port" {
-  type        = string
-  description = "Numer of ECS tasks"
+  type        = number
+  description = "ECS container port"
 
+}
+
+variable "domain_name" {
+  type        = string
+  description = "Route 53 Domain name"
 }

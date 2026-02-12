@@ -23,7 +23,9 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   family = var.ecs_family
   network_mode       = "awsvpc"
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  requires_compatibilities = ["FARGATE"]
   cpu          = 256
+  memory    = 512
   runtime_platform {
    operating_system_family = "LINUX"
    cpu_architecture        = "X86_64"
@@ -51,9 +53,10 @@ resource "aws_security_group" "ecs_sg" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 80
-    to_port         = 80
-    security_groups = [aws_security_group.ecs_sg.id]
+    from_port       = 8080
+    to_port         = 8080
+    security_groups = [var.lb_sg_id]
+  
   }
 
   egress {
@@ -71,9 +74,10 @@ resource "aws_ecs_service" "service"{
   task_definition = aws_ecs_task_definition.ecs_task_definition.arn
   desired_count   = var.task_count
   launch_type     = "FARGATE"
+  health_check_grace_period_seconds = 120
 
   network_configuration {
-    subnets          = [var.private-1_subnet.id, var.private-2_subnet.id]
+    subnets          = [var.private-1_subnet, var.private-2_subnet]
     security_groups  = [aws_security_group.ecs_sg.id]
     assign_public_ip = false
   }

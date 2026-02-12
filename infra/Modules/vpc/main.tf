@@ -125,7 +125,7 @@ resource "aws_route_table" "private-1-ngw" {
 }
 
 resource "aws_route_table_association" "private-1-ngw" {
-  subnet_id      = aws_subnet.public-1.id
+  subnet_id      = aws_subnet.private-1.id
   route_table_id = aws_route_table.private-1-ngw.id
 }
 
@@ -153,6 +153,6 @@ resource "aws_route_table" "private-2-ngw" {
 }
 
 resource "aws_route_table_association" "private-2-ngw" {
-  subnet_id      = aws_subnet.public-2.id
+  subnet_id      = aws_subnet.private-2.id
   route_table_id = aws_route_table.private-2-ngw.id
 }

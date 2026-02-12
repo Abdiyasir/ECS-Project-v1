@@ -18,11 +18,6 @@ output "alb_arn" {
   value       = module.alb.alb_arn
 }
 
-output "listener_arn" {
-  description = "The ARN of the ALB listener"
-  value       = module.alb.listener_arn
-}
-
 output "lb_sg_id" {
   description = "The ID of the https security group"
   value       = module.alb.lb_sg_id
@@ -43,3 +38,22 @@ output "lb_dns_name" {
   value       = module.alb.lb_dns_name
 }
 
+output "public-1_subnet" {
+  description = "The Public subnet 1 ID"
+  value       = module.vpc.public-1_subnet
+}
+
+output "public-2_subnet" {
+  description = "The Public subnet 2 ID"
+  value       = module.vpc.public-2_subnet
+}
+
+output "private-1_subnet" {
+  description = "The private subnet 1 ID"
+  value       = module.vpc.private-1_subnet
+}
+
+output "private-2_subnet" {
+  description = "The private subnet 2 ID"
+  value       = module.vpc.private-2_subnet
+}

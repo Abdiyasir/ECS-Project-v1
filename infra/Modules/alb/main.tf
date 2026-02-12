@@ -29,7 +29,7 @@ resource "aws_security_group" "lb_sg" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "tcp"
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -38,15 +38,15 @@ resource "aws_security_group" "lb_sg" {
 
 resource "aws_lb_target_group" "alb_tg" {
   name        = "alb-tg"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = aws_vpc.threat-composer.id
+  vpc_id      = var.vpc_id
 
   health_check {
     path                = "/health"
     protocol            = "HTTP"
-    matcher             = "200"
+    matcher             = "200-399"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -61,8 +61,8 @@ resource "aws_vpc" "threat-composer" {
 
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_lb.alb_threat_composer.arn
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
   certificate_arn   = var.certificate_arn
 
   default_action {
@@ -71,3 +71,18 @@ resource "aws_lb_listener" "listener" {
   }
 }
 
+
+resource "aws_lb_listener" "http_redirect" {
+  load_balancer_arn = aws_lb.alb_threat_composer.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
