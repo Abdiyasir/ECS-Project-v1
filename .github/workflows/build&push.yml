@@ -33,7 +33,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, tag, and push image to Amazon ECR
+    - name: Build, tag & push image to Amazon ECR
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -58,3 +58,5 @@ jobs:
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
+
+        # pipeline test
