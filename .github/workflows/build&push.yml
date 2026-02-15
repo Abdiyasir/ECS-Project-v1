@@ -25,7 +25,7 @@ jobs:
     -  name: Configure AWS Credentials
        uses: aws-actions/configure-aws-credentials@v6.0.0
        with:
-        audience: sts.amazonaws.com.cn
+        audience: sts.amazonaws.com
         aws-region: eu-west-2
         role-to-assume: arn:aws:iam::306758374042:role/github-actions-ecs-role
 
