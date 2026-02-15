@@ -3,7 +3,7 @@ on: [push]
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}      
+  ECR_REPOSITORY: threat_composer_repo    
   ECS_SERVICE: ${{ secrets.ECR_SERVICE }}            
   ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}              
   ECS_TASK_DEFINITION: ${{ secrets.ECS_TASK_DEFINITION }}
