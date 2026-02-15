@@ -26,7 +26,7 @@ jobs:
        uses: aws-actions/configure-aws-credentials@v6.0.0
        with:
         audience: sts.amazonaws.com.cn
-        aws-region: cn-northwest-1
+        aws-region: eu-west-2
         role-to-assume: arn:aws:iam::306758374042:role/github-actions-ecs-role
 
     - name: Login to Amazon ECR
