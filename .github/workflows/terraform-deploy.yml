@@ -1,0 +1,28 @@
+name: Terraform Deployment
+on: [push]
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  TF_VERSION: 1.7.5
+  TF_IN_AUTOMATION: true
+
+jobs:
+  apply:
+    name: Terraform Deploymen
+    runs-on: ubuntu-latestt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@main
+        with:
+          terraform_version: latest
+
+      - name: Check Terraform Format
+        id: fmt
+        run: terraform fmt -check
+
+      - name: Initialise Terraform
+        id: init
+        run: terraform init
