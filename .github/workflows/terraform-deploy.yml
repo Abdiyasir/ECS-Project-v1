@@ -8,8 +8,8 @@ env:
 
 jobs:
   apply:
-    name: Terraform Deploymen
-    runs-on: ubuntu-latestt
+    name: Terraform Deployment
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,3 +26,11 @@ jobs:
       - name: Initialise Terraform
         id: init
         run: terraform init
+
+      - name: Validate Terraform
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Run Terraform Plan
+        id: plan
+        run: terraform plan -no-color
