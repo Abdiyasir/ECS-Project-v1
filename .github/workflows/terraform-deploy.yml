@@ -1,5 +1,11 @@
 name: Terraform Deployment
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
@@ -7,30 +13,44 @@ env:
   TF_IN_AUTOMATION: true
 
 jobs:
-  apply:
-    name: Terraform Deployment
+  terraform:
+    name: Terraform
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@main
+      
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
-          terraform_version: latest
+          audience: sts.amazonaws.com
+          aws-region: eu-west-2
+          role-to-assume: arn:aws:iam::306758374042:role/github-actions-ecs-role
 
-      - name: Check Terraform Format
-        id: fmt
-        run: terraform fmt -check
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+         terraform_version: ${{ env.TF_VERSION }}
+      
 
-      - name: Initialise Terraform
-        id: init
+      - name: Terraform Init
         run: terraform init
 
-      - name: Validate Terraform
-        id: validate
-        run: terraform validate -no-color
+      - name: Terraform Format
+        run: terraform fmt
 
-      - name: Run Terraform Plan
-        id: plan
-        run: terraform plan -no-color
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
