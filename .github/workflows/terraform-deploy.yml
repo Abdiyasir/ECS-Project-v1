@@ -1,8 +1,10 @@
 name: Terraform Deployment
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - 'infra/**'
+      
   pull_request:
     branches:
       - main
@@ -31,7 +33,7 @@ jobs:
         with:
           audience: sts.amazonaws.com
           aws-region: eu-west-2
-          role-to-assume: arn:aws:iam::306758374042:role/github-actions-ecs-role
+          role-to-assume: arn:aws:iam::306758374042:role/Terraform-Deployment-Role
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
