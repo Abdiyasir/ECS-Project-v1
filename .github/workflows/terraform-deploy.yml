@@ -14,11 +14,11 @@ env:
   PUBLIC_2_SUBNET: ${{ vars.PUBLIC_2_SUBNET }}
   PRIVATE_1_SUBNET: ${{ vars.PRIVATE_1_SUBNET }}
   PRIVATE_2_SUBNET: ${{ vars.PRIVATE_2_SUBNET }}
-  TF_VAR_AZ_1: ${{ vars.AZ_1 }}
-  TF_VAR_AZ_2: ${{ vars.AZ_2 }}
+  AZ_1: ${{ vars.AZ_1 }}
+  AZ_2: ${{ vars.AZ_2 }}
   TF_VAR_igw_cidr: ${{ vars.IGW_CIDR }}
-  TF_VAR_ngw_1_cidr: ${{ vars.NGW_1_CIDR }}
-  TF_VAR_ngw_2_cidr: ${{ vars.NGW_2_CIDR }}
+  NGW_1_CIDR: ${{ vars.NGW_1_CIDR }}
+  NGW_2_CIDR: ${{ vars.NGW_2_CIDR }}
   TF_VAR_repo_name:  ${{ vars.REPO_NAME }}
   TF_VAR_cert_name: ${{ vars.CERT_NAME }}
   TF_VAR_image_tag_mutability: ${{ vars.IMAGE_TAG_MUTABILITY }}
