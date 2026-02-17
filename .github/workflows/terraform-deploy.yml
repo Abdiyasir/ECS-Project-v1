@@ -25,7 +25,6 @@ env:
   TF_VAR_ecs_family: ${{vars.ECS_FAMILY }}
   TF_VAR_image_uri: ${{ vars.IMAGE_URI }}
   TF_VAR_container_name: ${{ vars.CONTAINER_NAME }}
-  TF_VAR_TASK_COUNT: ${{ vars.TASK_COUNT }}
   TF_VAR_container_port: ${{ vars.CONTAINER_PORT }}
   TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
   TF_VAR_vpc_cidr: ${{ vars.VPC_CIDR }}
