@@ -10,10 +10,10 @@ on:
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
-  TF_VAR_public_1_subnet: ${{ vars.PUBLIC_1_SUBNET }}
-  TF_VAR_public_2_subnet: ${{ vars.PUBLIC_2_SUBNET }}
-  TF_VAR_private_1_subnet: ${{ vars.PRIVATE_1_SUBNET }}
-  TF_VAR_private_2_subnet: ${{ vars.PRIVATE_2_SUBNET }}
+  PUBLIC_1_SUBNET: ${{ vars.PUBLIC_1_SUBNET }
+  PUBLIC_2_SUBNET: ${{ vars.PUBLIC_2_SUBNET }}
+  PRIVATE_1_SUBNET: ${{ vars.PRIVATE_1_SUBNET }}
+  PRIVATE_2_SUBNET: ${{ vars.PRIVATE_2_SUBNET }}
   TF_VAR_AZ_1: ${{ vars.AZ_1 }}
   TF_VAR_AZ_2: ${{ vars.AZ_2 }}
   TF_VAR_igw_cidr: ${{ vars.IGW_CIDR }}
