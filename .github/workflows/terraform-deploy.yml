@@ -10,6 +10,24 @@ on:
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
+  PUBLIC_1_SUBNET: ${{ vars.PUBLIC_1_SUBNET }}
+  PUBLIC_2_SUBNET: ${{ vars.PUBLIC_2_SUBNET }}
+  PRIVATE_1_SUBNET: ${{ vars.PRIVATE_1_SUBNET }}
+  PRIVATE_2_SUBNET: ${{ vars.PRIVATE_2_SUBNET }}
+  AZ_1: ${{ vars.AZ }}
+  AZ_2: ${{ vars.AZ_2 }}
+  IGW_CIDR: ${{ vars.IGW_CIDR }}
+  NGW_1_CIDR: ${{ vars.NGW_1_CIDR }}
+  NGW_2_CIDR: ${{ vars.NGW_2_CIDR }}
+  REPO_NAME: ${{ vars.REPO_NAME }}
+  CERT_NAME: ${{ vars.CERT_NAME }}
+  IMAGE_TAG_MUTABILITY: ${{ vars.IMAGE_TAG_MUTABILITY }}
+  ECS_FAMILY: ${{vars.ECS_FAMILY }}
+  IMAGE_URI: ${{ vars.IMAGE_URI }}
+  CONTAINER_NAME: ${{ vars.CONTAINER_NAME }}
+  TASK_COUNT: ${{ vars.TASK_COUNT }}
+  CONTAINER_PORT: ${{ vars.CONTAINER_PORT }}
+  DOMAIN_NAME: ${{ vars.DOMAIN_NAME }}
   TF_VERSION: 1.7.5
   TF_IN_AUTOMATION: true
 
@@ -54,7 +72,16 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -input=false -out=tfplan
+        run: |
+          terraform plan -input=false -out=tfplan \
+            -var="public-1_subnet=$PUBLIC_1_SUBNET"
+            -var="public-2_subnet=$PUBLIC_2_SUBNET"
+            -var="private-1_subnet=$PRIVATE_1_SUBNET"
+            -var="private-2_subnet=$PRIVATE_1_SUBNET"
+            -var="az-1=$AZ_1"
+            -var="az-2=$AZ_2"
+            -var="ngw_1_cidr=$NGW_1_CIDR"
+            -var="ngw-2_cidr=$NGW_2_CIDR"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
