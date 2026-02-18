@@ -74,9 +74,11 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Image URI debug
-        run:  echo $IMAGE_URI
-        
+      - name: Image URI and SHA debug
+        run: |
+         echo "IMAGE_URI=$IMAGE_URI"
+         echo "SHA=$GITHUB_SHA"
+         
 
       - name: Terraform Plan
         run: |
