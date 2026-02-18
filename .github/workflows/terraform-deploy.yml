@@ -74,6 +74,10 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Image URI debug
+        run:  echo $IMAGE_URI
+        
+
       - name: Terraform Plan
         run: |
           terraform plan -input=false -out=tfplan \
