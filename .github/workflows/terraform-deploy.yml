@@ -10,6 +10,7 @@ on:
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   PUBLIC_1_SUBNET: ${{ vars.PUBLIC_1_SUBNET }}
   PUBLIC_2_SUBNET: ${{ vars.PUBLIC_2_SUBNET }}
   PRIVATE_1_SUBNET: ${{ vars.PRIVATE_1_SUBNET }}
@@ -23,7 +24,6 @@ env:
   TF_VAR_cert_name: ${{ vars.CERT_NAME }}
   TF_VAR_image_tag_mutability: ${{ vars.IMAGE_TAG_MUTABILITY }}
   TF_VAR_ecs_family: ${{vars.ECS_FAMILY }}
-  TF_VAR_image_uri: ${{ vars.IMAGE_URI }}
   TF_VAR_container_name: ${{ vars.CONTAINER_NAME }}
   TF_VAR_container_port: ${{ vars.CONTAINER_PORT }}
   TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
@@ -31,6 +31,8 @@ env:
   TF_VAR_task_count: ${{ vars.TASK_COUNT }}
   TF_VERSION: 1.7.5
   TF_IN_AUTOMATION: true
+  IMAGE_URI: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY}:${github.sha}
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
 
 jobs:
   terraform:
@@ -78,12 +80,14 @@ jobs:
             -var="public-1_subnet=$PUBLIC_1_SUBNET" \
             -var="public-2_subnet=$PUBLIC_2_SUBNET" \
             -var="private-1_subnet=$PRIVATE_1_SUBNET" \
-            -var="private-2_subnet=$PRIVATE_1_SUBNET" \
+            -var="private-2_subnet=$PRIVATE_2_SUBNET" \
             -var="az-1=$AZ_1" \
             -var="az-2=$AZ_2" \
             -var="ngw-1_cidr=$NGW_1_CIDR" \
             -var="ngw-2_cidr=$NGW_2_CIDR" \
+            -var="image_uri=$IMAGE_URI"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -input=false -auto-approve tfplan
+        run: |
+          terraform apply -input=false -auto-approve tfplan
