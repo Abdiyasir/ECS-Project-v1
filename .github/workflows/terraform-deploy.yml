@@ -1,8 +1,10 @@
 name: Terraform Deployment
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - "Build & Push Docker To ECR"
+    types:
+      - completed
       
   pull_request:
     branches:
@@ -37,6 +39,7 @@ env:
 jobs:
   terraform:
     name: Terraform
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -97,4 +100,3 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           terraform apply -input=false -auto-approve tfplan
-#
