@@ -42,6 +42,14 @@ ACM provisions and manages SSL/TLS certification for ``tm.abdiyasirthreatcompose
 
 <img width="1918" height="513" alt="image" src="https://github.com/user-attachments/assets/2c0cebc8-4431-4b46-bef9-50bc9897566f" />
 
+## CI/CD pipelines:
+Fully automated pipelines for docker build & push, terraform deployment and post deployment health checks. OIDC was used in the terraform pipeline to enable AWS authentication without relying on static keys.
+
+<img width="1422" height="671" alt="image" src="https://github.com/user-attachments/assets/b3560c10-945b-441b-a39f-2c4afe166507" />
+<img width="1420" height="782" alt="image" src="https://github.com/user-attachments/assets/c39dc161-f51d-420d-88db-60b1aa767999" />
+<img width="1431" height="558" alt="image" src="https://github.com/user-attachments/assets/dc49498f-c594-49a2-9459-569aa4861703" />
+
+
 
 
 
