@@ -13,6 +13,7 @@ This includes:
 
 <img width="816" height="673" alt="image" src="https://github.com/user-attachments/assets/32e500ed-972b-43b7-ad8c-86295afcd0ec" />
 
+
 This includes:
 
 - Private VPC
@@ -26,6 +27,7 @@ This includes:
 - ACM to provide HTTPS certificate for encrypting traffic for users
 
 ## Image of running app & health check
+
 
 <img width="1918" height="1020" alt="image" src="https://github.com/user-attachments/assets/6ad754e2-2622-4951-be6f-0d505254fcc6" />
 <img width="1918" height="672" alt="image" src="https://github.com/user-attachments/assets/b676e5a8-b451-4f93-bc26-33aced948790" />
