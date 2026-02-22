@@ -26,6 +26,29 @@ This includes:
 - Route 53 as a DNS to provide a domain name
 - ACM to provide HTTPS certificate for encrypting traffic for users
 
+## Local app setup
+
+- Clone github repository
+- Run the local setup below
+
+```
+yarn install
+yarn build
+yarn global add serve
+serve -s build
+
+#yarn start
+http://localhost:3000/workspaces/default/dashboard
+```
+
+## Docker Container Setup
+
+```
+docker build -t <image name>:tag
+docker run -p 8080:8080 <image name>:tag 
+curl http://localhost:8080/health
+```
+
 ## Image of running app & health check
 
 
