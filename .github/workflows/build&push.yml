@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'app/**' 
+      - '.github/workflows/build&push.yml'
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
