@@ -1,0 +1,93 @@
+# AWS ECS Fargate Project: Threat Composer Application
+
+## Project Overview:
+This project showcases a production grade deployment of a threat composer application to ECS fargate utilising tools such as docker, terraform and github actions for CI/CD pipelines.
+
+This includes:
+
+- Containerised app to ensure it runs consistently across different environments/host systems
+- Infrastructure as code using a modular approach to terraform
+- Fully automated pipelines for building the docker image, building cloud infrastructure & running a health check
+
+## AWS Architecture:
+
+<img width="822" height="727" alt="image" src="https://github.com/user-attachments/assets/8d9e10c8-e109-4277-82a0-a2345e7a93c7" />
+
+
+This includes:
+
+- Private VPC
+- Two availability zones for high availability and resilience against single zone failure
+- Public & private subnet for each availability zone
+- Internet gateway to allow internet traffic in and out of the VPC
+- Application load balancer to distribute incoming traffic to public subnets in both availability zones
+- Nat gateway to allow ECS tasks in private subnet to access the internet
+- ECS in private subnets with inbound traffic allowed from ALB security groups, allowing ECS task to receive and respond to requests.
+- Route 53 as a DNS to provide a domain name
+- ACM to provide HTTPS certificate for encrypting traffic for users
+
+## Local app setup
+
+- Clone github repository
+- Run the local setup below
+
+```
+yarn install
+yarn build
+yarn global add serve
+serve -s build
+
+#yarn start
+http://localhost:3000/workspaces/default/dashboard
+```
+
+## Docker Container Setup
+
+```
+docker build -t <image name>:tag
+docker run -p 8080:8080 <image name>:tag 
+curl http://localhost:8080/health
+```
+
+## Image of running app & health check
+
+
+<img width="1918" height="1020" alt="image" src="https://github.com/user-attachments/assets/6ad754e2-2622-4951-be6f-0d505254fcc6" />
+<img width="1918" height="672" alt="image" src="https://github.com/user-attachments/assets/b676e5a8-b451-4f93-bc26-33aced948790" />
+
+## Elastic Container Registry:
+I used the bootstrapping approach to create the ECR manually via clickops before integrating it into my terraform via infrastructure as code.
+
+<img width="1918" height="577" alt="image" src="https://github.com/user-attachments/assets/f370e8f7-2c7d-43cc-b99a-5f99bdf6477e" />
+
+## AWS Certificate Manager:
+ACM provisions and manages SSL/TLS certification for ``tm.abdiyasirthreatcomposer.co.uk``
+
+<img width="1918" height="513" alt="image" src="https://github.com/user-attachments/assets/2c0cebc8-4431-4b46-bef9-50bc9897566f" />
+
+## CI/CD pipelines:
+Fully automated pipelines for docker build & push, terraform deployment and post deployment health checks. OIDC was used in the terraform pipeline to enable AWS authentication without relying on static keys.
+
+<img width="1422" height="671" alt="image" src="https://github.com/user-attachments/assets/b3560c10-945b-441b-a39f-2c4afe166507" />
+<img width="1420" height="782" alt="image" src="https://github.com/user-attachments/assets/c39dc161-f51d-420d-88db-60b1aa767999" />
+<img width="1431" height="558" alt="image" src="https://github.com/user-attachments/assets/dc49498f-c594-49a2-9459-569aa4861703" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
