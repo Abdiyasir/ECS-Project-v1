@@ -2,7 +2,7 @@ name: Build & Push Docker To ECR
 on:
   push:
     paths:
-      - 'app/**'
+      - 'app/**' 
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
