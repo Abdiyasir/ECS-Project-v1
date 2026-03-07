@@ -34,6 +34,10 @@ env:
   TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
   TF_VAR_vpc_cidr: ${{ vars.VPC_CIDR }}
   TF_VAR_task_count: ${{ vars.TASK_COUNT }}
+  TF_VAR_cpu: ${{vars.CPU}}
+  TF_VAR_memory: ${{vars.MEMORY}}
+  TF_VAR_os: ${{vars.OS}}
+  TF_VAR_cpu_architecture: ${{vars.CPU_ARCHITECTURE}}
   TF_VERSION: 1.7.5
   TF_IN_AUTOMATION: true
   IMAGE_URI: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }}:${{ github.sha }}
