@@ -10,7 +10,7 @@ on:
     branches:
       - main  
     paths:
-      - 'infra/**''
+      - 'infra/**'
       - '.github/workflows/terraform-deploy.yml'
 
 env:
