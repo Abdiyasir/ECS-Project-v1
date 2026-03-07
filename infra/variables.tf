@@ -126,3 +126,9 @@ variable "os" {
 
 }
 
+variable "cpu_architecture" {
+  type        = string
+  description = "CPU architecture"
+
+}
+
