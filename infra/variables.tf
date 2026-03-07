@@ -92,7 +92,7 @@ variable "container_name" {
 
 }
 variable "task_count" {
-  type        = string
+  type        = number
   description = "Numer of ECS tasks"
 
 }
@@ -106,4 +106,28 @@ variable "container_port" {
 variable "domain_name" {
   type        = string
   description = "Route 53 Domain name"
+}
+
+variable "cpu" {
+  type        = number
+  description = "cpu"
+
+}
+
+variable "memory" {
+  type        = number
+  description = "memory"
+
+}
+
+variable "os" {
+  type        = string
+  description = "Operating sytem"
+
+}
+
+variable "cpu_architecture" {
+  type        = string
+  description = "CPU architecture"
+
 }

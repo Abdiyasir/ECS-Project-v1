@@ -46,7 +46,7 @@ variable "listener_arn" {
 }
 
 variable "task_count" {
-  type        = string
+  type        = number
   description = "Numer of ECS tasks"
 
 }
@@ -60,5 +60,29 @@ variable "container_port" {
 variable "lb_sg_id" {
   type        = string
   description = "ALB security group"
+
+}
+
+variable "cpu" {
+  type        = number
+  description = "cpu"
+
+}
+
+variable "memory" {
+  type        = number
+  description = "memory"
+
+}
+
+variable "os" {
+  type        = string
+  description = "Operating sytem"
+
+}
+
+variable "cpu_architecture" {
+  type        = string
+  description = "CPU architecture"
 
 }

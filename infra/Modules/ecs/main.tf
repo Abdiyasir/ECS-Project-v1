@@ -24,18 +24,18 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   network_mode       = "awsvpc"
   execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
   requires_compatibilities = ["FARGATE"]
-  cpu          = 256
-  memory    = 512
+  cpu          = var.cpu
+  memory    = var.memory
   runtime_platform {
-   operating_system_family = "LINUX"
-   cpu_architecture        = "X86_64"
+   operating_system_family = var.os
+   cpu_architecture        = var.cpu_architecture
  }
   container_definitions = jsonencode([
     {
       name      = var.container_name
       image     = var.image_uri
-      cpu       = 256
-      memory    = 512
+      cpu       = var.cpu
+      memory    = var.memory
       essential = true
       portMappings = [
         {

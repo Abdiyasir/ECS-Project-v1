@@ -40,5 +40,9 @@ module "ecs" {
   target_group_arn = module.alb.target_group_arn
   image_uri = var.image_uri
   lb_sg_id = module.alb.lb_sg_id
+  cpu = var.cpu
+  memory = var.memory
+  os = var.os
+  cpu_architecture = var.cpu_architecture
 }
 
