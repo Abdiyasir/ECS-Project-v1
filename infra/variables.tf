@@ -120,14 +120,9 @@ variable "memory" {
 
 }
 
-variable "cpu_architecture" {
-  type        = string
-  description = "CPU architecture"
-
-}
-
 variable "os" {
   type        = string
   description = "Operating sytem"
 
 }
+
