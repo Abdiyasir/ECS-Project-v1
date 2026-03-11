@@ -7,7 +7,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
 
-EXPOSE 3000
-CMD ["yarn", "start"]
+EXPOSE 8080
+CMD ["node", "server.js"]
 
 #complete
