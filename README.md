@@ -11,7 +11,7 @@ This includes:
 
 ## AWS Architecture:
 
-![alt text](image.png)
+<img width="925" height="693" alt="image" src="https://github.com/user-attachments/assets/f5bffb8c-5035-42be-ab6f-18229a75a4be" />
 
 
 This includes:
