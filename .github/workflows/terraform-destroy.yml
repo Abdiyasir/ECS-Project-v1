@@ -1,0 +1,102 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_destroy:
+        description: "Type DESTROY to confirm"
+        required: true
+        type: string
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+
+  PUBLIC_1_SUBNET: ${{ vars.PUBLIC_1_SUBNET }}
+  PUBLIC_2_SUBNET: ${{ vars.PUBLIC_2_SUBNET }}
+  PRIVATE_1_SUBNET: ${{ vars.PRIVATE_1_SUBNET }}
+  PRIVATE_2_SUBNET: ${{ vars.PRIVATE_2_SUBNET }}
+
+  AZ_1: ${{ vars.AZ_1 }}
+  AZ_2: ${{ vars.AZ_2 }}
+
+  TF_VAR_igw_cidr: ${{ vars.IGW_CIDR }}
+  NGW_1_CIDR: ${{ vars.NGW_1_CIDR }}
+  NGW_2_CIDR: ${{ vars.NGW_2_CIDR }}
+
+  TF_VAR_repo_name: ${{ vars.REPO_NAME }}
+  TF_VAR_cert_name: ${{ vars.CERT_NAME }}
+  TF_VAR_image_tag_mutability: ${{ vars.IMAGE_TAG_MUTABILITY }}
+
+  TF_VAR_ecs_family: ${{ vars.ECS_FAMILY }}
+  TF_VAR_container_name: ${{ vars.CONTAINER_NAME }}
+  TF_VAR_container_port: ${{ vars.CONTAINER_PORT }}
+
+  TF_VAR_domain_name: ${{ vars.DOMAIN_NAME }}
+  TF_VAR_vpc_cidr: ${{ vars.VPC_CIDR }}
+  TF_VAR_task_count: ${{ vars.TASK_COUNT }}
+
+  TF_VAR_cpu: ${{ vars.CPU }}
+  TF_VAR_memory: ${{ vars.MEMORY }}
+  TF_VAR_os: ${{ vars.OS }}
+  TF_VAR_cpu_architecture: ${{ vars.CPU_ARCHITECTURE }}
+
+  TF_VERSION: 1.11.0
+  TF_IN_AUTOMATION: true
+
+  ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+
+  IMAGE_URI: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.${{ vars.AWS_REGION }}.amazonaws.com/${{ vars.ECR_REPOSITORY }}:latest
+
+jobs:
+  terraform-destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+
+    if: ${{ github.event.inputs.confirm_destroy == 'DESTROY' }}
+
+    defaults:
+      run:
+        working-directory: ./infra
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.0.0
+        with:
+          audience: sts.amazonaws.com
+          aws-region: eu-west-2
+          role-to-assume: arn:aws:iam::306758374042:role/Terraform-Deployment-Role
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Destroy Plan
+        run: |
+          terraform plan -destroy -input=false -out=destroy.tfplan \
+            -var="public-1_subnet=$PUBLIC_1_SUBNET" \
+            -var="public-2_subnet=$PUBLIC_2_SUBNET" \
+            -var="private-1_subnet=$PRIVATE_1_SUBNET" \
+            -var="private-2_subnet=$PRIVATE_2_SUBNET" \
+            -var="az-1=$AZ_1" \
+            -var="az-2=$AZ_2" \
+            -var="ngw-1_cidr=$NGW_1_CIDR" \
+            -var="ngw-2_cidr=$NGW_2_CIDR" \
+            -var="image_uri=$IMAGE_URI"
+
+      - name: Terraform Destroy
+        run: terraform apply -input=false -auto-approve destroy.tfplan
