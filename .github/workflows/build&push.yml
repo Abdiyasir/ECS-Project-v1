@@ -64,6 +64,3 @@ jobs:
         wait-for-service-stability: true
 
 
-
-
-# Finalised pipeline version
