@@ -2,8 +2,10 @@ name: Build & Push Docker To ECR
 on:
   push:
     paths:
-      - 'app/**' 
+      - 'app/**'
       - '.github/workflows/build&push.yml'
+
+  workflow_dispatch:
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION }}
@@ -64,3 +66,4 @@ jobs:
         wait-for-service-stability: true
 
 
+# Finalised version
