@@ -88,16 +88,44 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      - name: Scale ECS service to zero
+      - name: Scale ECS service to zero if it exists
         run: |
-          aws ecs update-service \
-          --cluster "$ECS_CLUSTER" \
-          --service "$ECS_SERVICE" \
-          --desired-count 0
+          echo "Checking ECS cluster..."
 
-          aws ecs wait services-stable \
-          --cluster threat-composer-cluster \
-          --services ecs_service  
+          CLUSTER_STATUS=$(aws ecs describe-clusters \
+            --clusters "$ECS_CLUSTER" \
+            --query 'clusters[0].status' \
+            --output text 2>/dev/null || true)
+
+          if [ "$CLUSTER_STATUS" = "ACTIVE" ]; then
+            echo "Cluster exists. Checking ECS service..."
+
+            SERVICE_STATUS=$(aws ecs describe-services \
+              --cluster "$ECS_CLUSTER" \
+              --services "$ECS_SERVICE" \
+              --query 'services[0].status' \
+              --output text 2>/dev/null || true)
+
+            if [ "$SERVICE_STATUS" = "ACTIVE" ]; then
+              echo "Service exists. Scaling to zero..."
+
+              aws ecs update-service \
+                --cluster "$ECS_CLUSTER" \
+                --service "$ECS_SERVICE" \
+                --desired-count 0
+
+              echo "Waiting for ECS service to stabilise..."
+
+              aws ecs wait services-stable \
+                --cluster "$ECS_CLUSTER" \
+                --services "$ECS_SERVICE"
+            else
+              echo "ECS service does not exist or is already inactive. Continuing destroy."
+            fi
+
+          else
+            echo "ECS cluster does not exist or is already inactive. Continuing destroy."
+          fi  
 
       - name: Terraform Destroy Plan
         run: |
