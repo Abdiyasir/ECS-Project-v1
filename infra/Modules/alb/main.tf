@@ -5,7 +5,7 @@ resource "aws_lb" "alb_threat_composer" {
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = [var.public-1_subnet, var.public-2_subnet]
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 }
 
 resource "aws_security_group" "lb_sg" {

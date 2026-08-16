@@ -85,6 +85,17 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
+      - name: Scale ECS service to zero
+        run: |
+          aws ecs update-service \
+          --cluster "$ECS_CLUSTER" \
+          --service "$ECS_SERVICE" \
+          --desired-count 0
+
+          aws ecs wait services-stable \
+          --cluster threat-composer-cluster \
+          --services ecs_service  
+
       - name: Terraform Destroy Plan
         run: |
           terraform plan -destroy -input=false -out=destroy.tfplan \
